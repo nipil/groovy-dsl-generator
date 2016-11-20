@@ -24,4 +24,4 @@ main.o: main.cpp heading.h
 	$(CC) $(CFLAGS) -c main.cpp -o $@
 
 clean:
-	rm -Rf *.o *~ *.lex.c *.tab.* *.output
+	rm -Rf gdg *.o *~ *.lex.c *.tab.* *.output
