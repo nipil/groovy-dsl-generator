@@ -10,6 +10,7 @@ MyParser myparser;
 %union{
   int int_val;
   string* str_val;
+  list<string*>* strlist_val;
 }
 
 /* points to the "top-level" (aka whole document) rule */
@@ -20,6 +21,7 @@ MyParser myparser;
 %token <str_val> CUSTOM_TYPE
 %token <str_val> STANDARD_TYPE
 %type <str_val> type_declaration
+%type <strlist_val> type_declarations
 %token CLOSURE_START
 %token CLOSURE_END
 %token TYPE_SEPARATOR
@@ -71,10 +73,15 @@ dsl_definition: IDENTIFIER type_declarations
               ;
 
 type_declarations: type_declaration {
-                  cout << " type_declaration (alone) " << *$1 << " at " << $1 << endl;
+                  list<string*>* lst = new list<string*>();
+                  lst->push_back($1);
+                  cout << " type_declaration (alone) " << *$1 << " at " << $1 << " into " << lst << endl;
+                  $$ = lst;
                  }
                  | type_declarations TYPE_SEPARATOR type_declaration {
-                  cout << " type_declaration (multiple) " << *$3 << " at " << $3 << endl;
+                  list<string*>* lst = $1;
+                  lst->push_back($3);
+                  cout << " type_declaration (multiple) " << *$3 << " at " << $3 << " into " << lst << endl;
                  }
                  ;
 

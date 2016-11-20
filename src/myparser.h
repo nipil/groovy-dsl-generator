@@ -2,6 +2,7 @@
 #define MYPARSER_H
 
 #include <set>
+#include <list>
 
 using namespace std;
 
