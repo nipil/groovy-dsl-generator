@@ -10,7 +10,8 @@ MyParser myparser;
 %union{
   int int_val;
   string* str_val;
-  list<string*>* strlist_val;
+  MyParser::Type* type_val;
+  MyParser::TypeList* typelist_val;
 }
 
 /* points to the "top-level" (aka whole document) rule */
@@ -20,8 +21,8 @@ MyParser myparser;
 %token <str_val> IDENTIFIER
 %token <str_val> CUSTOM_TYPE
 %token <str_val> STANDARD_TYPE
-%type <str_val> type_declaration
-%type <strlist_val> type_declarations
+%type <type_val> type_declaration
+%type <typelist_val> type_declarations
 %token CLOSURE_START
 %token CLOSURE_END
 %token TYPE_SEPARATOR
@@ -68,30 +69,34 @@ dsl_definitions: dsl_definition {
                }
                ;
 
-dsl_definition: IDENTIFIER type_declarations
-              { cout << "  dsl_definition '" << *$1 << "'" << endl; }
+dsl_definition: IDENTIFIER type_declarations {
+                MyParser::TypeList* lst = $2;
+                cout << "  dsl_definition '" << *$1 << "' typed " << lst << endl;
+              }
               ;
 
 type_declarations: type_declaration {
-                  list<string*>* lst = new list<string*>();
+                  MyParser::TypeList* lst = new MyParser::TypeList();
                   lst->push_back($1);
                   cout << " type_declaration (alone) " << *$1 << " at " << $1 << " into " << lst << endl;
                   $$ = lst;
                  }
                  | type_declarations TYPE_SEPARATOR type_declaration {
-                  list<string*>* lst = $1;
+                  MyParser::TypeList* lst = $1;
                   lst->push_back($3);
                   cout << " type_declaration (multiple) " << *$3 << " at " << $3 << " into " << lst << endl;
                  }
                  ;
 
 type_declaration: STANDARD_TYPE {
-                  cout << "type_standard " << *$1 << " at " << $1 << endl;
+                  MyParser::Type* type = $1;
+                  cout << "type_standard " << *type << " at " << type << endl;
                 }
                 | CUSTOM_TYPE {
-                  cout << "type_custom " << *$1 << " at " << $1 << endl;
-                  if (!myparser.hasCustomType(*$1)) {
-                    cerr << "type unknown ! " << $1 << endl;
+                  MyParser::Type* type = $1;
+                  cout << "type_custom " << *type << " at " << type << endl;
+                  if (!myparser.hasCustomType(*type)) {
+                    cerr << "type unknown ! " << *type << endl;
                     exit(1);
                   }
                 }

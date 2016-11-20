@@ -8,6 +8,10 @@ using namespace std;
 
 class MyParser {
 
+public:
+    typedef list<string*> TypeList;
+    typedef string Type;
+
 private:
     set<string> custom_types;
     string package;
