@@ -17,42 +17,46 @@ package     "@"{identifier}("."{identifier})*
 %%
 
 ";" {
-    printf("%s\n", yytext);
+    // printf("%s\n", yytext);
     return STATEMENT_END;
 }
 
 "{" {
-    printf("%s\n", yytext);
+    // printf("%s\n", yytext);
     return CLOSURE_START;
 }
 
 "}" {
-    printf("%s\n", yytext);
+    // printf("%s\n", yytext);
     return CLOSURE_END;
 }
 
 "," {
-    printf("%s\n", yytext);
+    // printf("%s\n", yytext);
     return TYPE_SEPARATOR;
 }
 
 {package} {
-    printf("pkg %s\n", yytext);
+    // printf("pkg %s\n", yytext);
+    yylval.str_val = new string(yytext);
     return PACKAGE;
 }
 
 {std_type} {
-    printf("std %s\n", yytext);
+    // printf("std %s\n", yytext);
+    yylval.str_val = new string(yytext);
     return STANDARD_TYPE;
 }
 
 {custom_type} {
-    printf("custom %s\n", yytext);
+    // printf("custom %s\n", yytext);
+    yylval.str_val = new string(yytext);
     return CUSTOM_TYPE;
 }
 
 {identifier} {
-    printf("id %s\n", yytext);
+    // printf("id %s\n", yytext);
+    yylval.str_val = new string(yytext);
     return IDENTIFIER;
 }
 

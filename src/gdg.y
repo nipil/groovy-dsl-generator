@@ -7,8 +7,8 @@ int yylex(void);
 %}
 
 %union{
-  int		int_val;
-  string*	str_val;
+  int int_val;
+  string* str_val;
 }
 
 /* points to the "top-level" (aka whole document) rule */
@@ -29,7 +29,8 @@ int yylex(void);
 %%
 
 input: PACKAGE statements
-		 ;
+     { cout << "package " << *$1 << endl; }
+     ;
 
 statements: statement
           | statements statement
@@ -40,6 +41,7 @@ statement: spec_declaration
          ;
 
 spec_declaration: CUSTOM_TYPE CLOSURE_START dsl_definitions CLOSURE_END
+                { cout << "spec_declaration " << *$1 << endl; }
                 ;
 
 dsl_definitions: dsl_definition
@@ -47,6 +49,7 @@ dsl_definitions: dsl_definition
                ;
 
 dsl_definition: IDENTIFIER type_declarations
+              { cout << "dsl_definition " << *$1 << endl; }
               ;
 
 type_declarations: type_declaration
@@ -54,14 +57,16 @@ type_declarations: type_declaration
                  ;
 
 type_declaration: STANDARD_TYPE
+                  { cout << "type_standard " << *$1 << endl; }
                 | CUSTOM_TYPE
+                  { cout << "custom_type " << *$1 << endl; }
                 ;
 %%
 
 int yyerror(string s)
 {
-  extern int yylineno;	// defined and maintained in lex.c
-  extern char *yytext;	// defined and maintained in lex.c
+  extern int yylineno;  // defined and maintained in lex.c
+  extern char *yytext;  // defined and maintained in lex.c
 
   cerr << "ERROR: " << s << " at symbol \"" << yytext;
   cerr << "\" on line " << yylineno << endl;
@@ -72,5 +77,3 @@ int yyerror(char *s)
 {
   return yyerror(string(s));
 }
-
-
