@@ -38,7 +38,9 @@ package     "@"{identifier}("."{identifier})*
 
 {package} {
     // printf("pkg %s\n", yytext);
-    yylval.str_val = new string(yytext);
+    // remove package marker '@'
+    char * package_name = yytext + 1;
+    yylval.str_val = new string(package_name);
     return PACKAGE;
 }
 
@@ -50,7 +52,8 @@ package     "@"{identifier}("."{identifier})*
 
 {custom_type} {
     // printf("custom %s\n", yytext);
-    yylval.str_val = new string(yytext);
+    char * type_name = yytext + 1;
+    yylval.str_val = new string(type_name);
     return CUSTOM_TYPE;
 }
 

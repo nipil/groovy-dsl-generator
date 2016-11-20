@@ -6,12 +6,12 @@
 }
 
 %tutu {
-    aze %toto
+    aze %titi
     qsd %titi
 }
 
 %tete {
-    aze num, %toto
+    aze num, %tutu
     qsd %titi, txt
 }
 

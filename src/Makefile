@@ -5,8 +5,8 @@ CFLAGS = -g -Wall -ansi -pedantic
 
 PGM = gdg
 
-$(PGM): $(PGM).tab.o $(PGM).lex.o main.o
-	$(CC) $(CFLAGS) $(PGM).tab.o $(PGM).lex.o main.o -o $@ -lfl
+$(PGM): $(PGM).tab.o $(PGM).lex.o myparser.o main.o
+	$(CC) $(CFLAGS) $(PGM).tab.o $(PGM).lex.o myparser.o main.o -o $@ -lfl
 
 $(PGM).tab.o: $(PGM).tab.c $(PGM).tab.h heading.h
 	$(CC) $(CFLAGS) -c $(PGM).tab.c -o $@
@@ -22,6 +22,9 @@ $(PGM).lex.c: $(PGM).lex $(PGM).tab.h heading.h
 
 main.o: main.cpp heading.h
 	$(CC) $(CFLAGS) -c main.cpp -o $@
+
+myparser.o: myparser.cpp myparser.h heading.h
+	$(CC) $(CFLAGS) -c myparser.cpp -o $@
 
 clean:
 	rm -Rf gdg *.o *~ *.lex.c *.tab.* *.output

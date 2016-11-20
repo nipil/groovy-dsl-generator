@@ -4,6 +4,7 @@
 #include "heading.h"
 int yyerror(char *s);
 int yylex(void);
+MyParser myparser;
 %}
 
 %union{
@@ -28,8 +29,7 @@ int yylex(void);
 
 %%
 
-input: PACKAGE statements
-     { cout << "package " << *$1 << endl; }
+input: PACKAGE statements { myparser.setPackage(*$1); }
      ;
 
 statements: statement
@@ -40,8 +40,9 @@ statement: spec_declaration
          | dsl_definition
          ;
 
-spec_declaration: CUSTOM_TYPE CLOSURE_START dsl_definitions CLOSURE_END
-                { cout << "spec_declaration " << *$1 << endl; }
+spec_declaration: CUSTOM_TYPE CLOSURE_START dsl_definitions CLOSURE_END {
+                  myparser.addCustomType(*$1);
+                }
                 ;
 
 dsl_definitions: dsl_definition
@@ -58,8 +59,12 @@ type_declarations: type_declaration
 
 type_declaration: STANDARD_TYPE
                   { cout << "type_standard " << *$1 << endl; }
-                | CUSTOM_TYPE
-                  { cout << "custom_type " << *$1 << endl; }
+                | CUSTOM_TYPE {
+                  if (!myparser.hasCustomType(*$1)) {
+                    cerr << "type unknown ! " << *$1 << endl;
+                    exit(1);
+                  }
+                }
                 ;
 %%
 
