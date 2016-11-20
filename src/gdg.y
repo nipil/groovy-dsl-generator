@@ -19,6 +19,7 @@ MyParser myparser;
 %token <str_val> IDENTIFIER
 %token <str_val> CUSTOM_TYPE
 %token <str_val> STANDARD_TYPE
+%type <str_val> type_declaration
 %token CLOSURE_START
 %token CLOSURE_END
 %token TYPE_SEPARATOR
@@ -70,10 +71,10 @@ dsl_definition: IDENTIFIER type_declarations
               ;
 
 type_declarations: type_declaration {
-                  cout << " type_declaration (alone)" << endl;
+                  cout << " type_declaration (alone) " << *$1 << " at " << $1 << endl;
                  }
                  | type_declarations TYPE_SEPARATOR type_declaration {
-                  cout << " type_declaration (multiple)" << endl;
+                  cout << " type_declaration (multiple) " << *$3 << " at " << $3 << endl;
                  }
                  ;
 
