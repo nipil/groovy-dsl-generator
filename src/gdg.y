@@ -11,22 +11,16 @@ int yylex(void);
   string*	str_val;
 }
 
-
 /* points to the "top-level" (aka whole document) rule */
 %start input
 
-%token <str_val> NAME
-
-%token PACKAGE_DECLARATOR
-%token <str_val> PACKAGE_NAME
-
-%token TYPE_DECLARATOR
+%token <str_val> PACKAGE
+%token <str_val> IDENTIFIER
+%token <str_val> CUSTOM_TYPE
+%token <str_val> STANDARD_TYPE
 %token CLOSURE_START
 %token CLOSURE_END
-
-%token <str_val> STANDARD_TYPE
 %token TYPE_SEPARATOR
-
 %token STATEMENT_END
 
 /* nicer error messages ("end of file" instead of "$end") */
@@ -34,39 +28,34 @@ int yylex(void);
 
 %%
 
-input: package_decl statement
-		;
+input: PACKAGE statements
+		 ;
 
-statement: /* empty */
-    |      type_decl
-    |      content_decl
-    ;
+statements: statement
+          | statements statement
+          ;
 
-package_decl: PACKAGE_DECLARATOR PACKAGE_NAME STATEMENT_END
-    ;
+statement: spec_declaration
+         | dsl_definition
+         ;
 
-type_decl: TYPE_DECLARATOR NAME CLOSURE_START dsl_decl CLOSURE_END STATEMENT_END
-    ;
+spec_declaration: CUSTOM_TYPE CLOSURE_START dsl_definitions CLOSURE_END
+                ;
 
-dsl_decl: /* empty */
-    |     decl_statement
-    |     dsl_decl dsl_decl
-    ;
+dsl_definitions: dsl_definition
+               | dsl_definitions dsl_definition
+               ;
 
-decl_statement: NAME type_statement
-    ;
+dsl_definition: IDENTIFIER type_declarations
+              ;
 
-type_statement: type_name
-    |           type_statement TYPE_SEPARATOR type_statement
-    ;
+type_declarations: type_declaration
+                 | type_declarations TYPE_SEPARATOR type_declaration
+                 ;
 
-type_name: STANDARD_TYPE
-    |      NAME
-    ;
-
-content_decl: NAME STANDARD_TYPE
-    ;
-
+type_declaration: STANDARD_TYPE
+                | CUSTOM_TYPE
+                ;
 %%
 
 int yyerror(string s)

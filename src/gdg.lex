@@ -9,11 +9,10 @@ int yyerror(char *s);
 
 digit       [0-9]
 letter      [a-zA-Z]
-name        {letter}({digit}|{letter}|_)*
-
-package_litteral     {name}("."{name})*
-
-standard_type_litteral ("num"|"txt")
+identifier  {letter}({digit}|{letter}|_)*
+std_type    "num"|"txt"
+custom_type "%"{identifier}
+package     "@"{identifier}("."{identifier})*
 
 %%
 
@@ -22,39 +21,45 @@ standard_type_litteral ("num"|"txt")
     return STATEMENT_END;
 }
 
-"@" {
-    printf("%s", yytext);
-    return PACKAGE_DECLARATOR;
-}
-
-"%" {
-    printf("%s", yytext);
-    return TYPE_DECLARATOR;
-}
-
 "{" {
-    printf("%s", yytext);
+    printf("%s\n", yytext);
     return CLOSURE_START;
 }
 
 "}" {
-    printf("%s", yytext);
+    printf("%s\n", yytext);
     return CLOSURE_END;
 }
 
-{name} {
-    printf("name %s ", yytext);
-    return NAME;
+"," {
+    printf("%s\n", yytext);
+    return TYPE_SEPARATOR;
 }
 
-{package_litteral} {
-    printf("package %s ", yytext);
-    return PACKAGE_NAME;
+{package} {
+    printf("pkg %s\n", yytext);
+    return PACKAGE;
 }
+
+{std_type} {
+    printf("std %s\n", yytext);
+    return STANDARD_TYPE;
+}
+
+{custom_type} {
+    printf("custom %s\n", yytext);
+    return CUSTOM_TYPE;
+}
+
+{identifier} {
+    printf("id %s\n", yytext);
+    return IDENTIFIER;
+}
+
 
 [ \t]*      ;
 [\n]        { yylineno++; }
 
-. { printf("unknown %s ", yytext); }
+. { printf("unknown %s\n", yytext); }
 
 %%
