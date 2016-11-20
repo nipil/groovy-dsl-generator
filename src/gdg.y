@@ -70,35 +70,54 @@ dsl_definitions: dsl_definition {
                ;
 
 dsl_definition: IDENTIFIER type_declarations {
+                // get list of already provided types
                 MyParser::TypeList* lst = $2;
+                // debug output
                 cout << "  dsl_definition '" << *$1 << "' typed " << lst << endl;
               }
               ;
 
 type_declarations: type_declaration {
+                  // build list for provided type
                   MyParser::TypeList* lst = new MyParser::TypeList();
                   lst->push_back($1);
-                  cout << " type_declaration (alone) " << *$1 << " at " << $1 << " into " << lst << endl;
+                  // forward list
                   $$ = lst;
+                  // debug output
+                  cout << " type_declaration (alone) " << *$1 << " at " << $1 << " into " << lst << endl;
                  }
                  | type_declarations TYPE_SEPARATOR type_declaration {
+                  // get list of already provided types
                   MyParser::TypeList* lst = $1;
+                  // add latest provided type to list
                   lst->push_back($3);
+                  // forward list
+                  $$ = lst;
+                  // debug output
                   cout << " type_declaration (multiple) " << *$3 << " at " << $3 << " into " << lst << endl;
                  }
                  ;
 
 type_declaration: STANDARD_TYPE {
+                  // get provided type
                   MyParser::Type* type = $1;
+                  // forward type
+                  $$ = type;
+                  // debug output
                   cout << "type_standard " << *type << " at " << type << endl;
                 }
                 | CUSTOM_TYPE {
+                  // get provided type
                   MyParser::Type* type = $1;
-                  cout << "type_custom " << *type << " at " << type << endl;
+                  // check that type has been defined
                   if (!myparser.hasCustomType(*type)) {
                     cerr << "type unknown ! " << *type << endl;
                     exit(1);
                   }
+                  // forward type
+                  $$ = type;
+                  // debug output
+                  cout << "type_custom " << *type << " at " << type << endl;
                 }
                 ;
 %%
