@@ -2,47 +2,59 @@
 /* compile to C program using `flex` */
 
 %{
-#include <stdio.h>
+#include "heading.h"
+#include "gdg.tab.h"
+int yyerror(char *s);
 %}
 
-DIGIT [[:digit:]]
-LETTER [[:alpha:]]
-WORD {LETTER}+
-NAME {LETTER}({LETTER}|{DIGIT}|_)*
+digit       [0-9]
+letter      [a-zA-Z]
+name        {letter}({digit}|{letter}|_)*
 
-PACKAGE "@"{NAME}("."{NAME})*
+package_litteral     {name}("."{name})*
 
-TYPE_STANDARD (num|txt)
-TYPE_SEPARATOR ","
-TYPE_CUSTOM "%"{NAME}
-
-CLOSURE_OPEN "{"
-CLOSURE_CLOSE "}"
-
-STATEMENT_TERMINATOR ";"
+standard_type_litteral ("num"|"txt")
 
 %%
 
-{PACKAGE} { printf("found package keyword\n"); }
-
-{TYPE_STANDARD} { printf("found standard type %s\n", yytext); }
-{TYPE_SEPARATOR} { printf("found type separator %s\n", yytext); }
-{TYPE_CUSTOM} { printf("found custom type %s\n", yytext); }
-
-{CLOSURE_OPEN} { printf("found closure start\n"); }
-{CLOSURE_CLOSE} { printf("found closure end\n"); }
-
-{NAME} { printf("found name %s\n", yytext); }
-
-{STATEMENT_TERMINATOR} { printf("found statement_terminator\n"); }
-
-[ \t\n\r]+ ;
-
-. { printf("unknown character %s\n", yytext); }
-
-%%
-
-int main(int argc, char** argv) {
-    yylex();
-    return 0;
+";" {
+    printf("%s\n", yytext);
+    return STATEMENT_END;
 }
+
+"@" {
+    printf("%s", yytext);
+    return PACKAGE_DECLARATOR;
+}
+
+"%" {
+    printf("%s", yytext);
+    return TYPE_DECLARATOR;
+}
+
+"{" {
+    printf("%s", yytext);
+    return CLOSURE_START;
+}
+
+"}" {
+    printf("%s", yytext);
+    return CLOSURE_END;
+}
+
+{name} {
+    printf("name %s ", yytext);
+    return NAME;
+}
+
+{package_litteral} {
+    printf("package %s ", yytext);
+    return PACKAGE_NAME;
+}
+
+[ \t]*      ;
+[\n]        { yylineno++; }
+
+. { printf("unknown %s ", yytext); }
+
+%%
