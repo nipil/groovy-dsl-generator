@@ -29,39 +29,61 @@ MyParser myparser;
 
 %%
 
-input: PACKAGE statements { myparser.setPackage(*$1); }
+input: PACKAGE statements {
+        cout << "       input" << endl;
+        myparser.setPackage(*$1);
+     }
      ;
 
-statements: statement
-          | statements statement
+statements: statement {
+            cout << "      spec_declaration (alone)" << endl;
+          }
+          | statements statement {
+            cout << "      spec_declaration (double)" << endl;
+          }
           ;
 
-statement: spec_declaration
-         | dsl_definition
+statement: spec_declaration {
+           cout << "     statement (spec_decl)" << endl;
+         }
+         | dsl_definition {
+           cout << "     statement (dsl_def)" << endl;
+         }
          ;
 
 spec_declaration: CUSTOM_TYPE CLOSURE_START dsl_definitions CLOSURE_END {
+                  cout << "    spec_declaration " << *$1 << " at " << $1 << endl;
                   myparser.addCustomType(*$1);
                 }
                 ;
 
-dsl_definitions: dsl_definition
-               | dsl_definitions dsl_definition
+dsl_definitions: dsl_definition {
+                  cout << "   dsl_definitions (alone)" << endl;
+               }
+               | dsl_definitions dsl_definition {
+                  cout << "   dsl_definitions (multiple)" << endl;
+               }
                ;
 
 dsl_definition: IDENTIFIER type_declarations
-              { cout << "dsl_definition " << *$1 << endl; }
+              { cout << "  dsl_definition '" << *$1 << "'" << endl; }
               ;
 
-type_declarations: type_declaration
-                 | type_declarations TYPE_SEPARATOR type_declaration
+type_declarations: type_declaration {
+                  cout << " type_declaration (alone)" << endl;
+                 }
+                 | type_declarations TYPE_SEPARATOR type_declaration {
+                  cout << " type_declaration (multiple)" << endl;
+                 }
                  ;
 
-type_declaration: STANDARD_TYPE
-                  { cout << "type_standard " << *$1 << endl; }
+type_declaration: STANDARD_TYPE {
+                  cout << "type_standard " << *$1 << " at " << $1 << endl;
+                }
                 | CUSTOM_TYPE {
+                  cout << "type_custom " << *$1 << " at " << $1 << endl;
                   if (!myparser.hasCustomType(*$1)) {
-                    cerr << "type unknown ! " << *$1 << endl;
+                    cerr << "type unknown ! " << $1 << endl;
                     exit(1);
                   }
                 }
