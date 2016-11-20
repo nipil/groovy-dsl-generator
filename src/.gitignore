@@ -1,0 +1,8 @@
+*.o
+bison.c
+gdg
+gdg.output
+gdg.tab.*
+lex.c
+lex.yy.c
+tok.h
