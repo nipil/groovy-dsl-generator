@@ -78,46 +78,18 @@ dsl_definition: IDENTIFIER type_declarations {
               ;
 
 type_declarations: type_declaration {
-                  // build list for provided type
-                  MyParser::TypeList* lst = new MyParser::TypeList();
-                  lst->push_back($1);
-                  // forward list
-                  $$ = lst;
-                  // debug output
-                  cout << " type_declaration (alone) " << *$1 << " at " << $1 << " into " << lst << endl;
+                  $$ = myparser.typeDeclarations_createfor_typeDeclaration($1);
                  }
                  | type_declarations TYPE_SEPARATOR type_declaration {
-                  // get list of already provided types
-                  MyParser::TypeList* lst = $1;
-                  // add latest provided type to list
-                  lst->push_back($3);
-                  // forward list
-                  $$ = lst;
-                  // debug output
-                  cout << " type_declaration (multiple) " << *$3 << " at " << $3 << " into " << lst << endl;
+                  $$ = myparser.typedeclarations_add_typeDeclaration($1, $3);
                  }
                  ;
 
 type_declaration: STANDARD_TYPE {
-                  // get provided type
-                  MyParser::Type* type = $1;
-                  // forward type
-                  $$ = type;
-                  // debug output
-                  cout << "type_standard " << *type << " at " << type << endl;
+                  $$ = myparser.standardType_to_typeDeclaration($1);
                 }
                 | CUSTOM_TYPE {
-                  // get provided type
-                  MyParser::Type* type = $1;
-                  // check that type has been defined
-                  if (!myparser.hasCustomType(*type)) {
-                    cerr << "type unknown ! " << *type << endl;
-                    exit(1);
-                  }
-                  // forward type
-                  $$ = type;
-                  // debug output
-                  cout << "type_custom " << *type << " at " << type << endl;
+                  $$ = myparser.customType_to_typeDeclaration($1);
                 }
                 ;
 %%

@@ -21,6 +21,11 @@ public:
     bool hasCustomType(string type) const;
     void addCustomType(string type);
     void setPackage(string pkg);
+
+    MyParser::Type* standardType_to_typeDeclaration(string* standardType) const;
+    MyParser::Type* customType_to_typeDeclaration(string* standardType);
+    MyParser::TypeList* typeDeclarations_createfor_typeDeclaration(MyParser::Type* type) const;
+    MyParser::TypeList* typedeclarations_add_typeDeclaration(MyParser::TypeList* lst, MyParser::Type* type) const;
 };
 
 #endif
