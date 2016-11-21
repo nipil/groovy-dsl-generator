@@ -1,6 +1,3 @@
-#include <iostream>
-#include <cstdlib>
-
 #include "heading.h"
 
 MyParser::MyParser() {
