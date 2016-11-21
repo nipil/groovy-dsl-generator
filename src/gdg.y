@@ -54,10 +54,10 @@ statements: statement {
           ;
 
 statement: spec_declaration {
-           myparser.addSpec($1);
+           myparser.addSpecification($1);
          }
          | dsl_definition {
-           myparser.addDef($1);
+           myparser.addDefinition($1);
          }
          ;
 

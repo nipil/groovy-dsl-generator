@@ -33,8 +33,8 @@ public:
     bool hasCustomType(string type) const;
     void addCustomType(string type);
     void setPackage(string pkg);
-    void addSpec(SpecDef* spec);
-    void addDef(DslDef* dsl);
+    void addSpecification(SpecDef* spec);
+    void addDefinition(DslDef* dsl);
 
     MyParser::Type* standardType_to_typeDeclaration(string* standardType) const;
     MyParser::Type* customType_to_typeDeclaration(string* standardType) const;

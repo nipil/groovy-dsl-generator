@@ -114,12 +114,12 @@ MyParser::SpecDef* MyParser::createSpecDefinition(string* typeKeyword, MyParser:
     return specDef;
 }
 
-void MyParser::addSpec(SpecDef* spec) {
+void MyParser::addSpecification(SpecDef* spec) {
     cout << "\tNew closure spec: " << *spec->type << endl;
     this->specifications[*spec->type] = spec;
 }
 
-void MyParser::addDef(DslDef* dsl) {
+void MyParser::addDefinition(DslDef* dsl) {
     cout << "\tNew dsl definition: " << *dsl->keyword << endl;
     this->definitions[*dsl->keyword] = dsl;
 }
