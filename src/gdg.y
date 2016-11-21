@@ -39,60 +39,33 @@ MyParser myparser;
 
 %%
 
-input: PACKAGE statements {
-        cout << "       input" << endl;
-        myparser.setPackage(*$1);
-     }
+input: PACKAGE statements { myparser.setPackage(*$1); }
      ;
 
-statements: statement {
-            cout << "      spec_declaration (alone)" << endl;
-          }
-          | statements statement {
-            cout << "      spec_declaration (multiple)" << endl;
-          }
+statements: statement
+          | statements statement
           ;
 
-statement: spec_declaration {
-           myparser.addSpecification($1);
-         }
-         | dsl_definition {
-           myparser.addDefinition($1);
-         }
+statement: spec_declaration { myparser.addSpecification($1); }
+         | dsl_definition { myparser.addDefinition($1);}
          ;
 
-spec_declaration: CUSTOM_TYPE CLOSURE_START dsl_definitions CLOSURE_END {
-                  $$ = myparser.createSpecDefinition($1, $3);
-                }
+spec_declaration: CUSTOM_TYPE CLOSURE_START dsl_definitions CLOSURE_END { $$ = myparser.createSpecDefinition($1, $3); }
                 ;
 
-dsl_definitions: dsl_definition {
-                $$ = myparser.dslDefinitions_createfor_dslDefinition($1);
-               }
-               | dsl_definitions dsl_definition {
-                $$ = myparser.dslDefinitions_add_dslDefinition($1, $2);
-               }
+dsl_definitions: dsl_definition { $$ = myparser.dslDefinitions_createfor_dslDefinition($1); }
+               | dsl_definitions dsl_definition { $$ = myparser.dslDefinitions_add_dslDefinition($1, $2); }
                ;
 
-dsl_definition: IDENTIFIER type_declarations {
-                $$ = myparser.createDslDefinition($1, $2);
-              }
+dsl_definition: IDENTIFIER type_declarations { $$ = myparser.createDslDefinition($1, $2); }
               ;
 
-type_declarations: type_declaration {
-                  $$ = myparser.typeDeclarations_createfor_typeDeclaration($1);
-                 }
-                 | type_declarations TYPE_SEPARATOR type_declaration {
-                  $$ = myparser.typedeclarations_add_typeDeclaration($1, $3);
-                 }
+type_declarations: type_declaration { $$ = myparser.typeDeclarations_createfor_typeDeclaration($1); }
+                 | type_declarations TYPE_SEPARATOR type_declaration { $$ = myparser.typedeclarations_add_typeDeclaration($1, $3); }
                  ;
 
-type_declaration: STANDARD_TYPE {
-                  $$ = myparser.standardType_to_typeDeclaration($1);
-                }
-                | CUSTOM_TYPE {
-                  $$ = myparser.customType_to_typeDeclaration($1);
-                }
+type_declaration: STANDARD_TYPE { $$ = myparser.standardType_to_typeDeclaration($1); }
+                | CUSTOM_TYPE { $$ = myparser.customType_to_typeDeclaration($1); }
                 ;
 %%
 
