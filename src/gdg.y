@@ -57,7 +57,7 @@ statement: spec_declaration {
            myparser.addSpec($1);
          }
          | dsl_definition {
-           cout << "     statement (dsl_def) at " << $1 << endl;
+           myparser.addDef($1);
          }
          ;
 

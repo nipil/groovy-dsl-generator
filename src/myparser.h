@@ -25,6 +25,7 @@ public:
 private:
     set<string> custom_types;
     map<Type,SpecDef*> specifications;
+    map<string,DslDef*> definitions;
     string package;
 
 public:
@@ -33,6 +34,7 @@ public:
     void addCustomType(string type);
     void setPackage(string pkg);
     void addSpec(SpecDef* spec);
+    void addDef(DslDef* dsl);
 
     MyParser::Type* standardType_to_typeDeclaration(string* standardType) const;
     MyParser::Type* customType_to_typeDeclaration(string* standardType) const;

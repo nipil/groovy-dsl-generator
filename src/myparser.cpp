@@ -115,6 +115,11 @@ MyParser::SpecDef* MyParser::createSpecDefinition(string* typeKeyword, MyParser:
 }
 
 void MyParser::addSpec(SpecDef* spec) {
-    cout << "\tNew spec: " << *spec->type << endl;
+    cout << "\tNew closure spec: " << *spec->type << endl;
     this->specifications[*spec->type] = spec;
+}
+
+void MyParser::addDef(DslDef* dsl) {
+    cout << "\tNew dsl definition: " << *dsl->keyword << endl;
+    this->definitions[*dsl->keyword] = dsl;
 }
