@@ -62,3 +62,19 @@ MyParser::TypeList* MyParser::typedeclarations_add_typeDeclaration(MyParser::Typ
     // forward list
     return lst;
 }
+
+MyParser::DslDef* MyParser::createDslDefinition(string* dslKeyword, MyParser::TypeList* lst) const {
+    // build dsl definition entry
+    MyParser::DslDef* dslDef = new MyParser::DslDef();
+    dslDef->keyword = dslKeyword;
+    dslDef->types = lst;
+    // debug output
+    cout << "  dsl_definition '" << *dslKeyword << "' at " << dslDef << " typed:";
+    for (MyParser::TypeList::iterator it = lst->begin(); it != lst->end(); it++) {
+        MyParser::Type* t = *it;
+        cout << " " << *t;
+    }
+    cout << endl;
+    // forward definition
+    return dslDef;
+}

@@ -11,6 +11,10 @@ class MyParser {
 public:
     typedef list<string*> TypeList;
     typedef string Type;
+    typedef struct {
+        string* keyword;
+        TypeList* types;
+    } DslDef;
 
 private:
     set<string> custom_types;
@@ -26,6 +30,7 @@ public:
     MyParser::Type* customType_to_typeDeclaration(string* standardType);
     MyParser::TypeList* typeDeclarations_createfor_typeDeclaration(MyParser::Type* type) const;
     MyParser::TypeList* typedeclarations_add_typeDeclaration(MyParser::TypeList* lst, MyParser::Type* type) const;
+    MyParser::DslDef* createDslDefinition(string* dslKeyword, MyParser::TypeList* lst) const;
 };
 
 #endif

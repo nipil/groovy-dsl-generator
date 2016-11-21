@@ -70,10 +70,7 @@ dsl_definitions: dsl_definition {
                ;
 
 dsl_definition: IDENTIFIER type_declarations {
-                // get list of already provided types
-                MyParser::TypeList* lst = $2;
-                // debug output
-                cout << "  dsl_definition '" << *$1 << "' typed " << lst << endl;
+                myparser.createDslDefinition($1, $2);
               }
               ;
 
