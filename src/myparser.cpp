@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include "heading.h"
 
 MyParser::MyParser() {
@@ -120,6 +122,30 @@ void MyParser::addSpecification(SpecDef* spec) {
 }
 
 void MyParser::addDefinition(DslDef* dsl) {
-    // cout << "\tNew dsl definition: " << *dsl->keyword << endl;
-    this->definitions[*dsl->keyword] = dsl;
+    stringstream ss;
+    ss << *dsl->keyword << "(";
+    for (TypeList::const_iterator it = dsl->types->begin(); it != dsl->types->end(); it++) {
+        if (it != dsl->types->begin()) {
+            ss << ",";
+        }
+        ss << **it;
+    }
+    ss << ")";
+    string str = ss.str();
+    // cout << "New dsl definition: " << str << endl;
+    this->definitions[str] = dsl;
+}
+
+void MyParser::display() const {
+    cout << "Target package : " << this->package << endl;
+    cout << "Parsed " << this->specifications.size() << " closure declaration:";
+    for (Specifications::const_iterator it = this->specifications.begin(); it != this->specifications.end(); it++) {
+        cout << " " << it->first;
+    }
+    cout << endl;
+    cout << "Parsed " << this->definitions.size() << " top-level DSL keywords:";
+    for (Definitions::const_iterator it = this->definitions.begin(); it != this->definitions.end(); it++) {
+        cout << " " << it->first;
+    }
+    cout << endl;
 }

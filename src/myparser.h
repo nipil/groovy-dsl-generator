@@ -23,13 +23,18 @@ public:
     } SpecDef;
 
 private:
-    set<string> custom_types;
-    map<Type,SpecDef*> specifications;
-    map<string,DslDef*> definitions;
+    typedef set<string> CustomTypes;
+    typedef map<Type,SpecDef*> Specifications;
+    typedef map<string,DslDef*> Definitions;
+
+    CustomTypes custom_types;
+    Specifications specifications;
+    Definitions definitions;
     string package;
 
 public:
     MyParser();
+
     bool hasCustomType(string type) const;
     void addCustomType(string type);
     void setPackage(string pkg);
@@ -44,6 +49,8 @@ public:
     MyParser::DslDefList* dslDefinitions_createfor_dslDefinition(MyParser::DslDef* dslDef) const;
     MyParser::DslDefList* dslDefinitions_add_dslDefinition(MyParser::DslDefList* lst, MyParser::DslDef* dslDef) const;
     MyParser::SpecDef* createSpecDefinition(string* typeKeyword, MyParser::DslDefList* lst);
+
+    void display() const;
 };
 
 #endif
