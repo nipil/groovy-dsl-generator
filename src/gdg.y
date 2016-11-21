@@ -49,15 +49,15 @@ statements: statement {
             cout << "      spec_declaration (alone)" << endl;
           }
           | statements statement {
-            cout << "      spec_declaration (double)" << endl;
+            cout << "      spec_declaration (multiple)" << endl;
           }
           ;
 
 statement: spec_declaration {
-           cout << "     statement (spec_decl) at " << $1 << endl;
+           myparser.addSpec($1);
          }
          | dsl_definition {
-           cout << "     statement (dsl_def)" << endl;
+           cout << "     statement (dsl_def) at " << $1 << endl;
          }
          ;
 

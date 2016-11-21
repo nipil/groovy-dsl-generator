@@ -3,6 +3,7 @@
 
 #include <set>
 #include <list>
+#include <map>
 
 using namespace std;
 
@@ -23,6 +24,7 @@ public:
 
 private:
     set<string> custom_types;
+    map<Type,SpecDef*> specifications;
     string package;
 
 public:
@@ -30,6 +32,7 @@ public:
     bool hasCustomType(string type) const;
     void addCustomType(string type);
     void setPackage(string pkg);
+    void addSpec(SpecDef* spec);
 
     MyParser::Type* standardType_to_typeDeclaration(string* standardType) const;
     MyParser::Type* customType_to_typeDeclaration(string* standardType) const;

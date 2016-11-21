@@ -113,3 +113,8 @@ MyParser::SpecDef* MyParser::createSpecDefinition(string* typeKeyword, MyParser:
     // forward spec
     return specDef;
 }
+
+void MyParser::addSpec(SpecDef* spec) {
+    cout << "\tNew spec: " << *spec->type << endl;
+    this->specifications[*spec->type] = spec;
+}
