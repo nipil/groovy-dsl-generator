@@ -99,3 +99,17 @@ MyParser::DslDefList* MyParser::dslDefinitions_add_dslDefinition(MyParser::DslDe
     // forward list
     return lst;
 }
+
+MyParser::SpecDef* MyParser::createSpecDefinition(string* typeKeyword, MyParser::DslDefList* lst) {
+    // add custom type to definition
+    MyParser::Type* type = typeKeyword;
+    this->addCustomType(*type);
+    // build spec definition entry
+    MyParser::SpecDef* specDef = new MyParser::SpecDef();
+    specDef->type = type;
+    specDef->defs = lst;
+    // debug output
+    cout << "    spec_declaration " << *type << " created " << specDef << " from type " << type << " dsldef " << lst << endl;
+    // forward spec
+    return specDef;
+}

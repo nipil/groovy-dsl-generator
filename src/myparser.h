@@ -16,6 +16,10 @@ public:
         TypeList* types;
     } DslDef;
     typedef list<DslDef*> DslDefList;
+    typedef struct {
+        Type* type;
+        DslDefList* defs;
+    } SpecDef;
 
 private:
     set<string> custom_types;
@@ -34,6 +38,7 @@ public:
     MyParser::DslDef* createDslDefinition(string* dslKeyword, MyParser::TypeList* lst) const;
     MyParser::DslDefList* dslDefinitions_createfor_dslDefinition(MyParser::DslDef* dslDef) const;
     MyParser::DslDefList* dslDefinitions_add_dslDefinition(MyParser::DslDefList* lst, MyParser::DslDef* dslDef) const;
+    MyParser::SpecDef* createSpecDefinition(string* typeKeyword, MyParser::DslDefList* lst);
 };
 
 #endif
