@@ -78,3 +78,23 @@ MyParser::DslDef* MyParser::createDslDefinition(string* dslKeyword, MyParser::Ty
     // forward definition
     return dslDef;
 }
+
+MyParser::DslDefList* MyParser::dslDefinitions_createfor_dslDefinition(MyParser::DslDef* dslDef) const {
+    // build list
+    MyParser::DslDefList* lst = new MyParser::DslDefList();
+    // add provided dsl definition
+    lst->push_back(dslDef);
+    // debug output
+    cout << "   dsl_definitions (alone) created at " << lst << " from " << dslDef << endl;
+    // forward list
+    return lst;
+}
+
+MyParser::DslDefList* MyParser::dslDefinitions_add_dslDefinition(MyParser::DslDefList* lst, MyParser::DslDef* dslDef) const {
+    // add provided dsl definition
+    lst->push_back(dslDef);
+    // debug output
+    cout << "   dsl_definitions (multiple) at " << lst << " added " << dslDef << endl;
+    // forward list
+    return lst;
+}

@@ -13,6 +13,7 @@ MyParser myparser;
   MyParser::Type* type_val;
   MyParser::TypeList* typelist_val;
   MyParser::DslDef* dsldef_val;
+  MyParser::DslDefList* dsldeflist_val;
 }
 
 /* points to the "top-level" (aka whole document) rule */
@@ -25,6 +26,7 @@ MyParser myparser;
 %type <type_val> type_declaration
 %type <typelist_val> type_declarations
 %type <dsldef_val> dsl_definition
+%type <dsldeflist_val> dsl_definitions
 %token CLOSURE_START
 %token CLOSURE_END
 %token TYPE_SEPARATOR
@@ -58,16 +60,16 @@ statement: spec_declaration {
          ;
 
 spec_declaration: CUSTOM_TYPE CLOSURE_START dsl_definitions CLOSURE_END {
-                  cout << "    spec_declaration " << *$1 << " at " << $1 << endl;
+                  cout << "    spec_declaration " << *$1 << " at " << $1 << " from " << $3 << endl;
                   myparser.addCustomType(*$1);
                 }
                 ;
 
 dsl_definitions: dsl_definition {
-                  cout << "   dsl_definitions (alone) create from " << $1 << endl;
+                $$ = myparser.dslDefinitions_createfor_dslDefinition($1);
                }
                | dsl_definitions dsl_definition {
-                  cout << "   dsl_definitions (multiple) add " << $2 << endl;
+                $$ = myparser.dslDefinitions_add_dslDefinition($1, $2);
                }
                ;
 
