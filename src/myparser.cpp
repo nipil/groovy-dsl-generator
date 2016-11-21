@@ -8,7 +8,7 @@ bool MyParser::hasCustomType(string type) const {
 }
 
 void MyParser::addCustomType(string type) {
-    cout << "\tAdding custom type: " << type << endl;
+    // cout << "\tAdding custom type: " << type << endl;
     if (this->hasCustomType(type)) {
         cerr << "ERROR: Custom type " << type << " already declared" << endl;
         exit(1);
@@ -17,7 +17,7 @@ void MyParser::addCustomType(string type) {
 }
 
 void MyParser::setPackage(string pkg) {
-    cout << "\tSetting package path: " << pkg << endl;
+    // cout << "\tSetting package path: " << pkg << endl;
     this->package = pkg;
 }
 
@@ -25,7 +25,7 @@ MyParser::Type* MyParser::standardType_to_typeDeclaration(string* standardType) 
     // get provided type
     MyParser::Type* type = standardType;
     // debug output
-    cout << "type_standard " << *type << " at " << type << endl;
+    // cout << "type_standard " << *type << " at " << type << endl;
     // forward type
     return type;
 }
@@ -39,7 +39,7 @@ MyParser::Type* MyParser::customType_to_typeDeclaration(string* customType) cons
         exit(1);
     }
     // debug output
-    cout << "type_custom " << *type << " at " << type << endl;
+    // cout << "type_custom " << *type << " at " << type << endl;
     // forward type
     return type;
 }
@@ -50,7 +50,7 @@ MyParser::TypeList* MyParser::typeDeclarations_createfor_typeDeclaration(MyParse
     // add provided type
     lst->push_back(type);
     // debug output
-    cout << " type_declaration (alone) " << *type << " at " << type << " into " << lst << endl;
+    // cout << " type_declaration (alone) " << *type << " at " << type << " into " << lst << endl;
     // forward list
     return lst;
 }
@@ -59,7 +59,7 @@ MyParser::TypeList* MyParser::typedeclarations_add_typeDeclaration(MyParser::Typ
     // add latest provided type to list
     lst->push_back(type);
     // debug output
-    cout << " type_declaration (multiple) " << *type << " at " << type << " into " << lst << endl;
+    // cout << " type_declaration (multiple) " << *type << " at " << type << " into " << lst << endl;
     // forward list
     return lst;
 }
@@ -70,12 +70,12 @@ MyParser::DslDef* MyParser::createDslDefinition(string* dslKeyword, MyParser::Ty
     dslDef->keyword = dslKeyword;
     dslDef->types = lst;
     // debug output
-    cout << "  dsl_definition '" << *dslKeyword << "' at " << dslDef << " typed:";
-    for (MyParser::TypeList::iterator it = lst->begin(); it != lst->end(); it++) {
-        MyParser::Type* t = *it;
-        cout << " " << *t;
-    }
-    cout << endl;
+    // cout << "  dsl_definition '" << *dslKeyword << "' at " << dslDef << " typed:";
+    // for (MyParser::TypeList::iterator it = lst->begin(); it != lst->end(); it++) {
+    //     MyParser::Type* t = *it;
+    //     cout << " " << *t;
+    // }
+    // cout << endl;
     // forward definition
     return dslDef;
 }
@@ -86,7 +86,7 @@ MyParser::DslDefList* MyParser::dslDefinitions_createfor_dslDefinition(MyParser:
     // add provided dsl definition
     lst->push_back(dslDef);
     // debug output
-    cout << "   dsl_definitions (alone) created at " << lst << " from " << dslDef << endl;
+    // cout << "   dsl_definitions (alone) created at " << lst << " from " << dslDef << endl;
     // forward list
     return lst;
 }
@@ -95,7 +95,7 @@ MyParser::DslDefList* MyParser::dslDefinitions_add_dslDefinition(MyParser::DslDe
     // add provided dsl definition
     lst->push_back(dslDef);
     // debug output
-    cout << "   dsl_definitions (multiple) at " << lst << " added " << dslDef << endl;
+    // cout << "   dsl_definitions (multiple) at " << lst << " added " << dslDef << endl;
     // forward list
     return lst;
 }
@@ -109,17 +109,17 @@ MyParser::SpecDef* MyParser::createSpecDefinition(string* typeKeyword, MyParser:
     specDef->type = type;
     specDef->defs = lst;
     // debug output
-    cout << "    spec_declaration " << *type << " created " << specDef << " from type " << type << " dsldef " << lst << endl;
+    // cout << "    spec_declaration " << *type << " created " << specDef << " from type " << type << " dsldef " << lst << endl;
     // forward spec
     return specDef;
 }
 
 void MyParser::addSpecification(SpecDef* spec) {
-    cout << "\tNew closure spec: " << *spec->type << endl;
+    // cout << "\tNew closure spec: " << *spec->type << endl;
     this->specifications[*spec->type] = spec;
 }
 
 void MyParser::addDefinition(DslDef* dsl) {
-    cout << "\tNew dsl definition: " << *dsl->keyword << endl;
+    // cout << "\tNew dsl definition: " << *dsl->keyword << endl;
     this->definitions[*dsl->keyword] = dsl;
 }
