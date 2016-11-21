@@ -32,7 +32,7 @@ public:
     void setPackage(string pkg);
 
     MyParser::Type* standardType_to_typeDeclaration(string* standardType) const;
-    MyParser::Type* customType_to_typeDeclaration(string* standardType);
+    MyParser::Type* customType_to_typeDeclaration(string* standardType) const;
     MyParser::TypeList* typeDeclarations_createfor_typeDeclaration(MyParser::Type* type) const;
     MyParser::TypeList* typedeclarations_add_typeDeclaration(MyParser::TypeList* lst, MyParser::Type* type) const;
     MyParser::DslDef* createDslDefinition(string* dslKeyword, MyParser::TypeList* lst) const;

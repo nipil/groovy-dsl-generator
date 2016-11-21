@@ -30,7 +30,7 @@ MyParser::Type* MyParser::standardType_to_typeDeclaration(string* standardType) 
     return type;
 }
 
-MyParser::Type* MyParser::customType_to_typeDeclaration(string* customType) {
+MyParser::Type* MyParser::customType_to_typeDeclaration(string* customType) const {
     // get provided type
     MyParser::Type* type = customType;
     // check that type has been defined
