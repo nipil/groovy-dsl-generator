@@ -13,9 +13,11 @@ int main(int argc, char **argv)
     exit( 1 );
   }
 
-  cout << "before parse" << endl;
   int result = yyparse();
-  cout << "after parse, result " << result << endl;
+  if (result != 0)
+    cout << "result " << result << endl;
+  else
+    myparser.display();
 
   return 0;
 }

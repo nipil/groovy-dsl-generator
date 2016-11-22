@@ -10,3 +10,4 @@ using namespace std;
 #include <string>
 
 #include "myparser.h"
+extern MyParser myparser;
