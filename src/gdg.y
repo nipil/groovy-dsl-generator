@@ -29,10 +29,6 @@ MyParser myparser;
 %type <dsldef_val> dsl_definition
 %type <dsldeflist_val> dsl_definitions
 %type <specdef_val> spec_declaration
-%token CLOSURE_START
-%token CLOSURE_END
-%token TYPE_SEPARATOR
-%token STATEMENT_END
 
 /* nicer error messages ("end of file" instead of "$end") */
 %token END 0 "end of file"
@@ -50,7 +46,7 @@ statement: spec_declaration { myparser.addSpecification($1); }
          | dsl_definition { myparser.addDefinition($1);}
          ;
 
-spec_declaration: CUSTOM_TYPE CLOSURE_START dsl_definitions CLOSURE_END { $$ = myparser.createSpecDefinition($1, $3); }
+spec_declaration: CUSTOM_TYPE '{' dsl_definitions '}' { $$ = myparser.createSpecDefinition($1, $3); }
                 ;
 
 dsl_definitions: dsl_definition { $$ = myparser.dslDefinitions_createfor_dslDefinition($1); }
@@ -61,7 +57,7 @@ dsl_definition: IDENTIFIER type_declarations { $$ = myparser.createDslDefinition
               ;
 
 type_declarations: type_declaration { $$ = myparser.typeDeclarations_createfor_typeDeclaration($1); }
-                 | type_declarations TYPE_SEPARATOR type_declaration { $$ = myparser.typedeclarations_add_typeDeclaration($1, $3); }
+                 | type_declarations ',' type_declaration { $$ = myparser.typedeclarations_add_typeDeclaration($1, $3); }
                  ;
 
 type_declaration: STANDARD_TYPE { $$ = myparser.standardType_to_typeDeclaration($1); }

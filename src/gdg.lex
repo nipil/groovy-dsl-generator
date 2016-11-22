@@ -16,26 +16,6 @@ package     "@"{identifier}("."{identifier})*
 
 %%
 
-";" {
-    // printf("%s\n", yytext);
-    return STATEMENT_END;
-}
-
-"{" {
-    // printf("%s\n", yytext);
-    return CLOSURE_START;
-}
-
-"}" {
-    // printf("%s\n", yytext);
-    return CLOSURE_END;
-}
-
-"," {
-    // printf("%s\n", yytext);
-    return TYPE_SEPARATOR;
-}
-
 {package} {
     // printf("pkg %s\n", yytext);
     // remove package marker '@'
@@ -63,10 +43,9 @@ package     "@"{identifier}("."{identifier})*
     return IDENTIFIER;
 }
 
-
 [ \t]*      ;
 [\n]        { yylineno++; }
 
-. { printf("unknown %s\n", yytext); }
+.           { return yytext[0]; }
 
 %%
