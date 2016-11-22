@@ -1,6 +1,7 @@
 /* main.cc */
 
 #include "heading.h"
+#include "dslgen.h"
 
 // prototype of bison-generated parser function
 int yyparse();
@@ -18,6 +19,9 @@ int main(int argc, char **argv)
     cout << "result " << result << endl;
   else
     myparser.display();
+
+  DslGen generator(myparser);
+  generator.generate();
 
   return 0;
 }
