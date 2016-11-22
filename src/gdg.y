@@ -20,23 +20,31 @@ MyParser myparser;
 /* points to the "top-level" (aka whole document) rule */
 %start input
 
-%token <str_val> PACKAGE
+/* token, in order of precedence (last is higher precedence) */
 %token <str_val> IDENTIFIER
-%token <str_val> CUSTOM_TYPE
 %token <str_val> STANDARD_TYPE
 %type <type_val> type_declaration
 %type <typelist_val> type_declarations
 %type <dsldef_val> dsl_definition
 %type <dsldeflist_val> dsl_definitions
 %type <specdef_val> spec_declaration
+%type <str_val> custom_type
+%type <str_val> package_name
 
 /* nicer error messages ("end of file" instead of "$end") */
 %token END 0 "end of file"
 
 %%
 
-input: PACKAGE statements { myparser.setPackage(*$1); }
+input: package_statement statements
      ;
+
+package_statement: '@' package_name { myparser.setPackage(*$2); }
+                 ;
+
+package_name: IDENTIFIER { $$ = $1; }
+            | package_name '.' IDENTIFIER { $1->append("."); $1->append(*$3); $$ = $1; }
+            ;
 
 statements: statement
           | statements statement
@@ -46,8 +54,11 @@ statement: spec_declaration { myparser.addSpecification($1); }
          | dsl_definition { myparser.addDefinition($1);}
          ;
 
-spec_declaration: CUSTOM_TYPE '{' dsl_definitions '}' { $$ = myparser.createSpecDefinition($1, $3); }
+spec_declaration: custom_type '{' dsl_definitions '}' { $$ = myparser.createSpecDefinition($1, $3); }
                 ;
+
+custom_type : '%' IDENTIFIER { $$ = $2; }
+            ;
 
 dsl_definitions: dsl_definition { $$ = myparser.dslDefinitions_createfor_dslDefinition($1); }
                | dsl_definitions dsl_definition { $$ = myparser.dslDefinitions_add_dslDefinition($1, $2); }
@@ -61,7 +72,7 @@ type_declarations: type_declaration { $$ = myparser.typeDeclarations_createfor_t
                  ;
 
 type_declaration: STANDARD_TYPE { $$ = myparser.standardType_to_typeDeclaration($1); }
-                | CUSTOM_TYPE { $$ = myparser.customType_to_typeDeclaration($1); }
+                | custom_type { $$ = myparser.customType_to_typeDeclaration($1); }
                 ;
 %%
 
