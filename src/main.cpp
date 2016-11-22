@@ -13,7 +13,9 @@ int main(int argc, char **argv)
     exit( 1 );
   }
 
-  yyparse();
+  cout << "before parse" << endl;
+  int result = yyparse();
+  cout << "after parse, result " << result << endl;
 
   return 0;
 }
