@@ -1,0 +1,22 @@
+
+@aaa.bb.cc
+
+%titi (
+    b txt
+}
+
+%tutu {
+    aze %titi
+    qsd %titi
+}
+
+%tete {
+    aze num, %tutu
+    qsd %titi, txt
+}
+
+titi txt
+
+titi %tutu
+
+tata num,txt, %tutu
