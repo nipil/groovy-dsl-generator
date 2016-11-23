@@ -14,6 +14,7 @@ private:
     string packagePath;
 
     void createOutputDirectory() const;
+    void generateSpecifications();
 
 public:
     DslGen(const MyParser& parser);
