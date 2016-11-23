@@ -22,11 +22,11 @@ public:
         DslDefList* defs;
     } SpecDef;
 
-private:
     typedef set<string> CustomTypes;
     typedef map<Type,SpecDef*> Specifications;
     typedef map<string,DslDef*> Definitions;
 
+private:
     CustomTypes custom_types;
     Specifications specifications;
     Definitions definitions;
