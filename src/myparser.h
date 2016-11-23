@@ -35,6 +35,10 @@ private:
 public:
     MyParser();
 
+    const Specifications& getSpecifications() const;
+    const Definitions& getDefinitions() const;
+    const string& getPackage() const;
+
     bool hasCustomType(string type) const;
     void addCustomType(string type);
     void setPackage(string pkg);

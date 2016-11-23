@@ -11,8 +11,9 @@ class DslGen {
 
 private:
     const MyParser& parser;
+    string packagePath;
 
-public:
+    void createOutputDirectory() const;
 
 public:
     DslGen(const MyParser& parser);

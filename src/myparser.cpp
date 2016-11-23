@@ -149,3 +149,15 @@ void MyParser::display() const {
     }
     cout << endl;
 }
+
+const MyParser::Specifications& MyParser::getSpecifications() const {
+    return this->specifications;
+}
+
+const MyParser::Definitions& MyParser::getDefinitions() const {
+    return this->definitions;
+}
+
+const string& MyParser::getPackage() const {
+    return this->package;
+}
