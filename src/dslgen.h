@@ -9,6 +9,9 @@ using namespace std;
 
 class DslGen {
 
+public:
+    static const string DELEGATE_CLASS_NAME;
+
 private:
     const MyParser& parser;
     string packagePath;

@@ -8,6 +8,8 @@
 #include "myparser.h"
 #include "dslgen.h"
 
+const string DslGen::DELEGATE_CLASS_NAME = "DelegateTrait";
+
 DslGen::DslGen(const MyParser& myparser)
 : parser(myparser) {
 }
@@ -126,9 +128,12 @@ void DslGen::generateSpecification(const MyParser::SpecDef* const spec) const {
 
 	this->generatePackage(out);
 
-	// TODO: optional implements DelegateTrait 
-	// TODO: factor trait name
-	*out << "class " << classname << " implements DelegateTrait {" << endl << endl;
+	// generate class declaration
+	*out << "class " << classname << " ";
+	if (usedCustomTypes.size() > 0) {
+		*out << "implements " << this->DELEGATE_CLASS_NAME << " ";
+	}
+	*out << "{" << endl << endl;
 	for (MyParser::DslDefList::const_iterator it = spec->defs->begin(); it != spec->defs->end(); it++) {
 		this->generateDefinition(out, *it);
 	}
