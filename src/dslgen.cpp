@@ -9,6 +9,7 @@
 #include "dslgen.h"
 
 const string DslGen::DELEGATE_CLASS_NAME = "DelegateTrait";
+const string DslGen::MASTER_SCRIPT_TYPE = "masterScript";
 
 DslGen::DslGen(const MyParser& myparser)
 : parser(myparser) {
@@ -19,6 +20,19 @@ void DslGen::generate() {
 	replace(this->packagePath.begin(), this->packagePath.end(), '.', '/');
 	this->createOutputDirectory();
 	this->generateSpecifications();
+	this->generateMasterSpec();
+}
+
+void DslGen::generateMasterSpec() {
+	MyParser::SpecDef master;
+	master.type = (string *) &this->MASTER_SCRIPT_TYPE;
+	master.defs = new MyParser::DslDefList();
+	MyParser::Definitions pd = parser.getDefinitions();
+	for (MyParser::Definitions::const_iterator it = pd.begin(); it != pd.end(); it++) {
+		master.defs->push_back(it->second);
+	}
+	this->scanSpecForMembers(&master); // prevents const on method
+	this->generateSpecification(&master);
 }
 
 void DslGen::createOutputDirectory() const {
