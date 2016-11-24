@@ -12,6 +12,7 @@ class DslGen {
 private:
     const MyParser& parser;
     string packagePath;
+    set<string> usedCustomTypes;
 
     string getClassName(string customTypeName) const;
 
@@ -23,6 +24,8 @@ private:
 
     ofstream* createOutFile(const string& filepath) const;
     ofstream* createClassFile(const string& classname) const;
+
+    void scanSpecForMembers(const MyParser::SpecDef* const spec);
 
 public:
     DslGen(const MyParser& parser);

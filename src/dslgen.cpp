@@ -31,6 +31,7 @@ void DslGen::createOutputDirectory() const {
 void DslGen::generateSpecifications() {
 	const MyParser::Specifications& specs = parser.getSpecifications();
 	for (MyParser::Specifications::const_iterator it = specs.begin(); it != specs.end(); it++) {
+		this->scanSpecForMembers(it->second);
 		this->generateSpecification(it->second);
 	}
 }
@@ -62,7 +63,7 @@ string DslGen::getClassName(string customTypeName) const {
 
 void DslGen::generateDefinition(ostream* out, MyParser::DslDef* def) const {
 	int n;
-	*out << endl << "\tvoid " << *def->keyword << "(";
+	*out << "\tvoid " << *def->keyword << "(";
 
 	// method signature
 	n = 0;
@@ -99,7 +100,23 @@ void DslGen::generateDefinition(ostream* out, MyParser::DslDef* def) const {
 		}
 	}
 
-	*out << "\t}" << endl;
+	*out << "\t}" << endl << endl;
+}
+
+void DslGen::scanSpecForMembers(const MyParser::SpecDef* const spec) {
+	// clear used types
+	this->usedCustomTypes.clear();
+
+	// append custom types to used types 
+	for (MyParser::DslDefList::const_iterator it_defs = spec->defs->begin(); it_defs != spec->defs->end(); it_defs++) {
+		MyParser::DslDef* def = *it_defs;
+		for (MyParser::TypeList::const_iterator it = def->types->begin(); it != def->types->end(); it++) {
+			string type = **it;
+			if (parser.hasCustomType(type)) {
+				this->usedCustomTypes.insert(**it);
+			}
+		}
+	}
 }
 
 void DslGen::generateSpecification(const MyParser::SpecDef* const spec) const {
@@ -111,10 +128,16 @@ void DslGen::generateSpecification(const MyParser::SpecDef* const spec) const {
 
 	// TODO: optional implements DelegateTrait 
 	// TODO: factor trait name
-	*out << "class " << classname << " implements DelegateTrait {" << endl;
+	*out << "class " << classname << " implements DelegateTrait {" << endl << endl;
 	for (MyParser::DslDefList::const_iterator it = spec->defs->begin(); it != spec->defs->end(); it++) {
 		this->generateDefinition(out, *it);
 	}
+
+	// list used types as members
+	for (set<string>::const_iterator it = usedCustomTypes.begin(); it != usedCustomTypes.end(); it++) {
+		*out << "\t" << this->getClassName(*it) << " " << *it << endl;
+	}
+
 	*out << "}" << endl;
 
 	out->close();
