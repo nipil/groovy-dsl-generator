@@ -32,7 +32,7 @@ void DslGen::generateMasterSpec() {
 		master.defs->push_back(it->second);
 	}
 	this->scanSpecForMembers(&master); // prevents const on method
-	this->generateSpecification(&master);
+	this->generateSpecification(&master, true);
 }
 
 void DslGen::createOutputDirectory() const {
@@ -135,7 +135,7 @@ void DslGen::scanSpecForMembers(const MyParser::SpecDef* const spec) {
 	}
 }
 
-void DslGen::generateSpecification(const MyParser::SpecDef* const spec) const {
+void DslGen::generateSpecification(const MyParser::SpecDef* const spec, bool master) const {
 	string classname = this->getClassName(*spec->type);
 	cout << "Generating class " << classname << " for spec " << *spec->type << endl;
 	ofstream* out = this->createClassFile(classname);
@@ -143,7 +143,13 @@ void DslGen::generateSpecification(const MyParser::SpecDef* const spec) const {
 	this->generatePackage(out);
 
 	// generate class declaration
+	if (master) {
+		*out << "abstract ";
+	}
 	*out << "class " << classname << " ";
+	if (master) {
+		*out << "extends Script ";
+	}
 	if (usedCustomTypes.size() > 0) {
 		*out << "implements " << this->DELEGATE_CLASS_NAME << " ";
 	}

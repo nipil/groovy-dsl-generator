@@ -23,7 +23,7 @@ private:
     void createOutputDirectory() const;
     void generatePackage(ostream *out) const;
     void generateSpecifications();
-    void generateSpecification(const MyParser::SpecDef* const spec) const;
+    void generateSpecification(const MyParser::SpecDef* const spec, bool master = false) const;
     void generateDefinition(ostream* out, MyParser::DslDef* def) const;
     void generateMasterSpec();
 
