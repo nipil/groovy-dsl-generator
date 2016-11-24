@@ -13,6 +13,8 @@ private:
     const MyParser& parser;
     string packagePath;
 
+    string getClassName(string customTypeName) const;
+
     void createOutputDirectory() const;
     void generatePackage(ostream *out) const;
     void generateSpecifications();

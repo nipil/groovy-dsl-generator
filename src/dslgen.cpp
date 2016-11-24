@@ -53,19 +53,57 @@ void DslGen::generatePackage(ostream* out) const {
 	*out << "package " << parser.getPackage() << endl << endl;
 }
 
+string DslGen::getClassName(string customTypeName) const {
+	string classname = customTypeName + "Spec";
+	locale loc;
+	classname[0] = toupper(classname[0], loc);
+	return classname;
+}
+
 void DslGen::generateDefinition(ostream* out, MyParser::DslDef* def) const {
-	// TODO: generate object membur for closures present int definition types
-	*out << "\tdef " << *def->keyword << "(";
-	// TODO: generate arguments for types
+	int n;
+	*out << endl << "\tvoid " << *def->keyword << "(";
+
+	// method signature
+	n = 0;
+	for (MyParser::TypeList::const_iterator it = def->types->begin(); it != def->types->end(); it++) {
+		n += 1;
+		if (it != def->types->begin()) {
+			*out << ", ";
+		}
+		string& type = **it;
+		if (parser.hasCustomType(type)) {
+			*out << "Closure cl" << n;
+		} else if (type == "num") {
+			*out << "int num" << n;
+		} else if (type == "txt") {
+			*out << "Gstring txt" << n;
+		} else {
+			cerr << "unhandled standard type " << type << endl;
+			exit(1);
+		}
+	}
+
 	*out << ") {" << endl;
-	// TODO: commands for arguments (println/delegate)
+
+	// method body
+	n = 0;
+	for (MyParser::TypeList::const_iterator it = def->types->begin(); it != def->types->end(); it++) {
+		n += 1;
+		string& type = **it;
+		*out << "\t\t";
+		if (parser.hasCustomType(type)) {
+	        *out << "this.delegate(cl" << n << ", " << type << ")" << endl;
+		} else {
+			*out << "println \"" << type << n << "={" << type << n << "}\"" << endl;
+		}
+	}
+
 	*out << "\t}" << endl;
 }
 
 void DslGen::generateSpecification(const MyParser::SpecDef* const spec) const {
-	string classname = *spec->type + "Spec";
-	locale loc;
-	classname[0] = toupper(classname[0], loc);
+	string classname = this->getClassName(*spec->type);
 	cout << "Generating class " << classname << " for spec " << *spec->type << endl;
 	ofstream* out = this->createClassFile(classname);
 
