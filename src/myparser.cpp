@@ -58,6 +58,13 @@ MyParser::TypeList* MyParser::typeDeclarations_createfor_typeDeclaration(MyParse
 }
 
 MyParser::TypeList* MyParser::typedeclarations_add_typeDeclaration(MyParser::TypeList* lst, MyParser::Type* type) const {
+    // verify that we do not have the same custom type multiple times
+    for (MyParser::TypeList::const_iterator it = lst->begin(); it != lst->end(); it++) {
+        if (*type == **it) {
+            cerr << "duplicate type " << *type << " in same definition" << endl;
+            exit(1);
+        }
+    }
     // add latest provided type to list
     lst->push_back(type);
     // debug output
