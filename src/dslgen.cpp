@@ -123,7 +123,7 @@ void DslGen::scanSpecForMembers(const MyParser::SpecDef* const spec) {
 	// clear used types
 	this->usedCustomTypes.clear();
 
-	// append custom types to used types 
+	// append custom types to used types
 	for (MyParser::DslDefList::const_iterator it_defs = spec->defs->begin(); it_defs != spec->defs->end(); it_defs++) {
 		MyParser::DslDef* def = *it_defs;
 		for (MyParser::TypeList::const_iterator it = def->types->begin(); it != def->types->end(); it++) {
