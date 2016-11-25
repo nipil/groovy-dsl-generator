@@ -16,11 +16,20 @@
 
 %tete {
     aze num, %tutu
-    qsd %titi, txt
 }
 
-titi txt
+test01 txt
 
-titi %tutu
+test02 %tete
 
-tata num,txt, %tutu
+test03 num, %toto
+
+test05 num,txt, %toto
+test06 txt, %toto, num
+
+test09 num, %toto, %titi
+test10 num, %toto, %toto
+
+test12 num,num, %toto, %titi
+test13 num, %toto, num, %titi
+
