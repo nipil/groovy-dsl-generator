@@ -13,8 +13,8 @@
 }
 
 %statistics {
-    amount num, %transaction
-    balance %person, num
+    balance num, %person
+    accountInfo num, %person, num
 }
 
 account txt, %statistics
