@@ -27,6 +27,7 @@ private:
     void generateSpecification(const MyParser::SpecDef* const spec, bool master = false) const;
     void generateDefinition(ostream* out, MyParser::DslDef* def) const;
     void generateMasterSpec();
+    void generateDelegate() const;
 
     ofstream* createOutFile(const string& filepath) const;
     ofstream* createClassFile(const string& classname) const;

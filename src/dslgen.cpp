@@ -22,6 +22,7 @@ void DslGen::generate() {
 	this->createOutputDirectory();
 	this->generateSpecifications();
 	this->generateMasterSpec();
+	this->generateDelegate();
 }
 
 void DslGen::generateMasterSpec() {
@@ -34,6 +35,23 @@ void DslGen::generateMasterSpec() {
 	}
 	this->scanSpecForMembers(&master); // prevents const on method
 	this->generateSpecification(&master, true);
+}
+
+void DslGen::generateDelegate() const {
+	cout << "Generating class " << this->DELEGATE_CLASS_NAME << " for closure delegation" << endl;
+	ofstream* out = this->createClassFile(this->DELEGATE_CLASS_NAME);
+
+	this->generatePackage(out);
+
+	*out << "trait DelegateTrait {" << endl << endl
+		<< "\tdef delegate(Closure cl, Object to) {" << endl
+		<< "\t\tdef code = cl.rehydrate(to, this, this)" << endl
+		<< "\t\tcode.resolveStrategy = Closure.DELEGATE_ONLY" << endl
+		<< "\t\tcode()" << endl
+		<< "\t}" << endl
+		<< "}" << endl;
+
+	out->close();
 }
 
 void DslGen::createOutputDirectory() const {
