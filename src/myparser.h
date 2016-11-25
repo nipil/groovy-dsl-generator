@@ -48,7 +48,7 @@ public:
     MyParser::Type* standardType_to_typeDeclaration(string* standardType) const;
     MyParser::Type* customType_to_typeDeclaration(string* standardType) const;
     MyParser::TypeList* typeDeclarations_createfor_typeDeclaration(MyParser::Type* type) const;
-    MyParser::TypeList* typedeclarations_add_typeDeclaration(MyParser::TypeList* lst, MyParser::Type* type) const;
+    MyParser::TypeList* typeDeclarations_add_typeDeclaration(MyParser::TypeList* lst, MyParser::Type* type) const;
     MyParser::DslDef* createDslDefinition(string* dslKeyword, MyParser::TypeList* lst) const;
     MyParser::DslDefList* dslDefinitions_createfor_dslDefinition(MyParser::DslDef* dslDef) const;
     MyParser::DslDefList* dslDefinitions_add_dslDefinition(MyParser::DslDefList* lst, MyParser::DslDef* dslDef) const;

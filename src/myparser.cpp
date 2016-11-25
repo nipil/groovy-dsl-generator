@@ -57,7 +57,7 @@ MyParser::TypeList* MyParser::typeDeclarations_createfor_typeDeclaration(MyParse
     return lst;
 }
 
-MyParser::TypeList* MyParser::typedeclarations_add_typeDeclaration(MyParser::TypeList* lst, MyParser::Type* type) const {
+MyParser::TypeList* MyParser::typeDeclarations_add_typeDeclaration(MyParser::TypeList* lst, MyParser::Type* type) const {
     // verify type coherence
     bool hasCustomType = false;
     for (MyParser::TypeList::const_iterator it = lst->begin(); it != lst->end(); it++) {

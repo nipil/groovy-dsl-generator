@@ -68,7 +68,7 @@ dsl_definition: IDENTIFIER type_declarations { $$ = myparser.createDslDefinition
               ;
 
 type_declarations: type_declaration { $$ = myparser.typeDeclarations_createfor_typeDeclaration($1); }
-                 | type_declarations ',' type_declaration { $$ = myparser.typedeclarations_add_typeDeclaration($1, $3); }
+                 | type_declarations ',' type_declaration { $$ = myparser.typeDeclarations_add_typeDeclaration($1, $3); }
                  ;
 
 type_declaration: STANDARD_TYPE { $$ = myparser.standardType_to_typeDeclaration($1); }
