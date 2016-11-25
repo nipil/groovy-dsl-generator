@@ -4,11 +4,18 @@ a bison/flex tool to generate classes from a sample dsl
 
 # requirements
 
-    sudo apt-get install make build-essential bison flex groovy
+    sudo apt-get install autoconf make g++ flex bison groovy
 
 # build
 
-    cd src && make
+To install `gdg` in `/usr/local/bin`
+
+    autoreconf --install
+    ./configure
+    make
+    sudo make install
+
+To install somewhere else, use `--prefix=/path/to` option of `./configure`
 
 # use
 
