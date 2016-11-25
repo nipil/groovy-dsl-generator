@@ -5,9 +5,13 @@
     b txt
 }
 
+%toto {
+    c txt
+}
+
 %tutu {
-    aze %titi
-    qsd %titi
+    aze num, num, num, num, txt, txt, %titi, num, txt
+    qsd %toto
 }
 
 %tete {
