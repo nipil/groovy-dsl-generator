@@ -1,7 +1,0 @@
-*.o
-bison.c
-gdg
-gdg.output
-gdg.tab.*
-gdg.lex.c
-tok.h

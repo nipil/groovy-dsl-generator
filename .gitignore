@@ -1,0 +1,31 @@
+# autoreconf --install
+Makefile.in
+aclocal.m4
+autom4te.cache/
+compile
+config.h.in
+configure
+depcomp
+install-sh
+missing
+src/Makefile.in
+ylwrap
+
+# ./configure
+Makefile
+config.h
+config.log
+config.status
+src/.deps/
+src/Makefile
+stamp-h1
+
+# make
+src/*.o
+src/gdg
+src/lexer.cpp
+src/parser.cpp
+src/parser.hpp
+
+# dist
+gdg-*.*.*
