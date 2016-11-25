@@ -3,7 +3,7 @@
 
 %{
 #include "heading.h"
-#include "gdg.tab.h"
+#include "parser.hpp"
 int yyerror(char *s);
 %}
 
