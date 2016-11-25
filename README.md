@@ -37,7 +37,17 @@ Groovy source generation :
     Generating sample dsl file example.dsl
     To parse DSL: groovy -cp output/src/main/groovy -b org.example.dsl.bank.MasterScriptSpec output/example.dsl
 
-Generated output is in `output` directory (see output above)
+Generated output is in `output` directory :
+
+    $ find output -type f |sort
+    output/example.dsl
+    output/src/main/groovy/org/example/dsl/bank/DelegateTrait.groovy
+    output/src/main/groovy/org/example/dsl/bank/MasterScriptSpec.groovy
+    output/src/main/groovy/org/example/dsl/bank/PersonSpec.groovy
+    output/src/main/groovy/org/example/dsl/bank/StatisticsSpec.groovy
+    output/src/main/groovy/org/example/dsl/bank/TransactionSpec.groovy
+
+The generated sample DSL file is `example.dsl` :
 
     $ cat output/example.dsl
 
