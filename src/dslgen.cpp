@@ -265,7 +265,7 @@ void DslGen::generateExampleDefinition(ostream* out, const string& customType, i
 
 void DslGen::generateCommandHint() const {
 	cout << "To parse DSL: groovy -cp "
-		<< this->BASE_OUTPUT << "/" << this->CLASS_PATH
-		<< " -b " << this->getClassName(this->MASTER_SCRIPT_TYPE) << " "
+		<< this->BASE_OUTPUT << "/" << this->CLASS_PATH << " "
+		<< "-b " << parser.getPackage() << "." << this->getClassName(this->MASTER_SCRIPT_TYPE) << " "
 		<< this->BASE_OUTPUT << "/" << this->SAMPLE_DSL << endl;
 }
