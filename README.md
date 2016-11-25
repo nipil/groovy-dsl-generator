@@ -4,7 +4,17 @@ a bison/flex tool to generate classes from a sample dsl
 
 # requirements
 
-    sudo apt-get install autoconf make g++ flex bison groovy
+## system
+
+Debian Jessie / Ubuntu 16.04
+
+    sudo apt-get install autoconf automake make g++ flex bison
+
+CentOS 7
+
+    sudo yum install autoconf automake make gcc-c++ flex bison
+
+## groovy
 
 *WARNING*: groovy version 2.3.0+ is required for the generated code.
 
