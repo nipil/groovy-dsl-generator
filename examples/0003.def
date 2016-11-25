@@ -1,0 +1,22 @@
+
+@org.example.dsl.bank
+
+%person {
+    age num
+    name txt
+    surname txt
+}
+
+%transaction {
+    sender %person
+    receiver %person
+}
+
+%statistics {
+    amount num, %transaction
+    balance %person, num
+}
+
+account txt, %statistics
+
+manager %person
