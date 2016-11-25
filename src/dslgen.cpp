@@ -8,6 +8,7 @@
 #include "myparser.h"
 #include "dslgen.h"
 
+const string DslGen::BASE_OUTPUT = "output";
 const string DslGen::DELEGATE_CLASS_NAME = "DelegateTrait";
 const string DslGen::MASTER_SCRIPT_TYPE = "masterScript";
 
@@ -16,7 +17,7 @@ DslGen::DslGen(const MyParser& myparser)
 }
 
 void DslGen::generate() {
-	this->packagePath = parser.getPackage();
+	this->packagePath = this->BASE_OUTPUT + "/src/main/groovy/" + parser.getPackage();
 	replace(this->packagePath.begin(), this->packagePath.end(), '.', '/');
 	this->createOutputDirectory();
 	this->generateSpecifications();
