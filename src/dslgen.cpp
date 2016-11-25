@@ -118,7 +118,11 @@ void DslGen::generateDefinition(ostream* out, MyParser::DslDef* def) const {
 		}
 		string& type = **it;
 		if (parser.hasCustomType(type)) {
-			*out << "Closure cl" << n;
+			// see @DelegatesTo from GroovyDoc
+			// http://docs.groovy-lang.org/docs/latest/html/documentation/core-domain-specific-languages.html#TheDelegatesToannotation-DelegatesTo
+			*out << "@DelegatesTo(strategy=Closure.DELEGATE_ONLY, value="
+				<< this->getClassName(type) << ") "
+				<< "Closure cl" << n;
 		} else if (type == "num") {
 			*out << "int num" << n;
 		} else if (type == "txt") {
