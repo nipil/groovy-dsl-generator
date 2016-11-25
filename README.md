@@ -17,13 +17,15 @@ To install `gdg` in `/usr/local/bin`
 
 To install somewhere else, use `--prefix=/path/to` option of `./configure`
 
+If you do not want to install via autotools, just copy `src/gdg` somewhere on your path (or use it in-place)
+
 # use
 
 Edit a definition file, or use one in `samples-working`
 
 Generate groovy classes and test dsl file :
 
-    src/gdg path/to/definition/file
+    gdg path/to/definition/file
 
 Then use the test command provided at the end of generation to run the DSL classes against the DSL test file
 
