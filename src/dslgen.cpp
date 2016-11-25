@@ -221,7 +221,7 @@ void DslGen::generateExampleDefinition(ostream* out, const MyParser::DslDef* con
 		}
 		string& type = **it;
 		if (parser.hasCustomType(type)) {
-			*out << "Closure cl";
+			this->generateExampleDefinition(out, type, level+1);
 		} else if (type == "num") {
 			*out << random();
 		} else if (type == "txt") {
@@ -237,4 +237,27 @@ void DslGen::generateExampleDefinition(ostream* out, const MyParser::DslDef* con
 		}
 	}
 	*out << endl;
+}
+
+void DslGen::generateExampleDefinition(ostream* out, const string& customType, int level) const {
+
+	const MyParser::Specifications& specs = parser.getSpecifications();
+
+	MyParser::Specifications::const_iterator it_spec = specs.find(customType);
+	if (it_spec == specs.end()) {
+		cerr << "could not find spec to generate sample dsl" << endl;
+		exit(1);
+	}
+	const MyParser::SpecDef* spec = it_spec->second;
+
+	*out << "{" << endl;
+
+	for (MyParser::DslDefList::const_iterator it = spec->defs->begin(); it != spec->defs->end(); it++) {
+		this->generateExampleDefinition(out, *it, level);
+	}
+
+	for (int i= 0; i<level-1; i++) {
+		*out << "\t";
+	}
+	*out << "}";
 }

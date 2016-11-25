@@ -33,6 +33,7 @@ private:
 
     void generateExample() const;
     void generateExampleDefinition(ostream* out, const MyParser::DslDef* const def, int level) const;
+    void generateExampleDefinition(ostream* out, const string& customType, int level) const;
 
     ofstream* createOutFile(const string& filepath) const;
     ofstream* createClassFile(const string& classname) const;
