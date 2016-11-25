@@ -2,6 +2,8 @@
 
 #include "heading.h"
 
+extern int yylineno;  // defined and maintained in lex.c
+
 MyParser::MyParser() {
 }
 
@@ -12,7 +14,7 @@ bool MyParser::hasCustomType(string type) const {
 void MyParser::addCustomType(string type) {
     // cout << "\tAdding custom type: " << type << endl;
     if (this->hasCustomType(type)) {
-        cerr << "ERROR: Custom type " << type << " already declared" << endl;
+        cerr << "ERROR on line " << yylineno << ": Custom type " << type << " already declared" << endl;
         exit(1);
     }
     this->custom_types.insert(type);
@@ -37,7 +39,7 @@ MyParser::Type* MyParser::customType_to_typeDeclaration(string* customType) cons
     MyParser::Type* type = customType;
     // check that type has been defined
     if (!this->hasCustomType(*type)) {
-        cerr << "ERROR: Custom type " << *type << " unknown (not declared)" << endl;
+        cerr << "ERROR on line " << yylineno << ": Custom type " << *type << " unknown (not declared)" << endl;
         exit(1);
     }
     // debug output
