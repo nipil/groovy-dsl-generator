@@ -7,8 +7,13 @@ AC_CONFIG_FILES([
  src/Makefile
 
 ])
+
 AC_PROG_LEX
 AM_PROG_LEX
+AC_PATH_PROG(LEX_INST, $LEX)
+if test -z "$LEX_INST"; then
+   AC_MSG_ERROR([flex/lex not found, please install any])
+fi
 
 AC_PROG_YACC
 AC_PATH_PROG(YACC_INST, $YACC)
