@@ -5,8 +5,15 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([
  Makefile
  src/Makefile
+
 ])
 AC_PROG_LEX
 AM_PROG_LEX
+
 AC_PROG_YACC
+AC_PATH_PROG(YACC_INST, $YACC)
+if test -z "$YACC_INST"; then
+   AC_MSG_ERROR([bison/byacc/yacc not found, please install any])
+fi
+
 AC_OUTPUT
