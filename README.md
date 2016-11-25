@@ -22,7 +22,33 @@ Then use the test command provided at the end of generation to run the DSL class
 
 # example
 
-Groovy source generation :
+One of the provided definition file :
+
+    $ cat samples-working/0003.def
+
+    @org.example.dsl.bank
+
+    %person {
+        age num
+        name txt
+        surname txt
+    }
+
+    %transaction {
+        sender %person
+        receiver %person
+    }
+
+    %statistics {
+        balance num, %person
+        accountInfo num, %person, num
+    }
+
+    account txt, %statistics
+
+    manager %person
+
+Generate groovy DSL code, and sample test file :
 
     $ src/gdg samples-working/0003.def Target package : org.example.dsl.bank
 
