@@ -113,7 +113,7 @@ void DslGen::generateDefinition(ostream* out, MyParser::DslDef* def) const {
 		} else if (type == "num") {
 			*out << "int num" << n;
 		} else if (type == "txt") {
-			*out << "Gstring txt" << n;
+			*out << "GString txt" << n;
 		} else {
 			cerr << "unhandled standard type " << type << endl;
 			exit(1);
