@@ -6,7 +6,7 @@ a bison/flex tool to generate classes from a sample dsl
 
     sudo apt-get install autoconf make g++ flex bison groovy
 
-# build
+# build & install
 
 To install `gdg` in `/usr/local/bin`
 
@@ -18,6 +18,8 @@ To install `gdg` in `/usr/local/bin`
 To install somewhere else, use `--prefix=/path/to` option of `./configure`
 
 If you do not want to install via autotools, just copy `src/gdg` somewhere on your path (or use it in-place)
+
+Then you can clean the build and intermediate files using `git clean -fdx`
 
 # use
 
