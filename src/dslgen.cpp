@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <ctime>
 
 #include <locale>
 #include <sstream>
@@ -10,11 +11,14 @@
 
 const string DslGen::BASE_OUTPUT = "output";
 const string DslGen::CLASS_PATH = "src/main/groovy";
+const string DslGen::SAMPLE_DSL = "sample.dsl";
 const string DslGen::DELEGATE_CLASS_NAME = "DelegateTrait";
 const string DslGen::MASTER_SCRIPT_TYPE = "masterScript";
 
 DslGen::DslGen(const MyParser& myparser)
 : parser(myparser) {
+	// set random seed, based on current unix time
+	srandom(time(NULL));
 }
 
 void DslGen::generate() {
@@ -24,6 +28,7 @@ void DslGen::generate() {
 	this->generateSpecifications();
 	this->generateMasterSpec();
 	this->generateDelegate();
+	this->generateExample();
 }
 
 void DslGen::generateMasterSpec() {
@@ -188,4 +193,48 @@ void DslGen::generateSpecification(const MyParser::SpecDef* const spec, bool mas
 	*out << "}" << endl;
 
 	out->close();
+}
+
+void DslGen::generateExample() const {
+	cout << "Generating sample dsl file " << this->SAMPLE_DSL << endl;
+	ofstream* out = this->createOutFile(this->SAMPLE_DSL);
+
+	MyParser::Definitions pd = parser.getDefinitions();
+	for (MyParser::Definitions::const_iterator it = pd.begin(); it != pd.end(); it++) {
+		this->generateExampleDefinition(out, it->second, 0);
+	}
+
+	out->close();
+}
+
+void DslGen::generateExampleDefinition(ostream* out, const MyParser::DslDef* const def, int level) const {
+
+	for (int i= 0; i<level; i++) {
+		*out << "\t";
+	}
+
+	*out << *def->keyword << " ";
+
+	for (MyParser::TypeList::const_iterator it = def->types->begin(); it != def->types->end(); it++) {
+		if (it != def->types->begin()) {
+			*out << ", ";
+		}
+		string& type = **it;
+		if (parser.hasCustomType(type)) {
+			*out << "Closure cl";
+		} else if (type == "num") {
+			*out << random();
+		} else if (type == "txt") {
+			int n = random() % 15 + 5;
+			*out << "\"";
+			for (int i=0; i<n; i++) {
+				*out << (char) ('a' + random() % 26);
+			}
+			*out << "\"";
+		} else {
+			cerr << "unhandled standard type " << type << endl;
+			exit(1);
+		}
+	}
+	*out << endl;
 }

@@ -12,6 +12,7 @@ class DslGen {
 public:
     static const string BASE_OUTPUT;
     static const string CLASS_PATH;
+    static const string SAMPLE_DSL;
     static const string DELEGATE_CLASS_NAME;
     static const string MASTER_SCRIPT_TYPE;
 
@@ -29,6 +30,9 @@ private:
     void generateDefinition(ostream* out, MyParser::DslDef* def) const;
     void generateMasterSpec();
     void generateDelegate() const;
+
+    void generateExample() const;
+    void generateExampleDefinition(ostream* out, const MyParser::DslDef* const def, int level) const;
 
     ofstream* createOutFile(const string& filepath) const;
     ofstream* createClassFile(const string& classname) const;
