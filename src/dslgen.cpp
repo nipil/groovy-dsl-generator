@@ -11,7 +11,7 @@
 
 const string DslGen::BASE_OUTPUT = "output";
 const string DslGen::CLASS_PATH = "src/main/groovy";
-const string DslGen::SAMPLE_DSL = "sample.dsl";
+const string DslGen::SAMPLE_DSL = "example.dsl";
 const string DslGen::DELEGATE_CLASS_NAME = "DelegateTrait";
 const string DslGen::MASTER_SCRIPT_TYPE = "masterScript";
 
