@@ -29,6 +29,7 @@ void DslGen::generate() {
 	this->generateMasterSpec();
 	this->generateDelegate();
 	this->generateExample();
+	this->generateCommandHint();
 }
 
 void DslGen::generateMasterSpec() {
@@ -260,4 +261,11 @@ void DslGen::generateExampleDefinition(ostream* out, const string& customType, i
 		*out << "\t";
 	}
 	*out << "}";
+}
+
+void DslGen::generateCommandHint() const {
+	cout << "To parse DSL: groovy -cp "
+		<< this->BASE_OUTPUT << "/" << this->CLASS_PATH
+		<< " -b " << this->getClassName(this->MASTER_SCRIPT_TYPE) << " "
+		<< this->BASE_OUTPUT << "/" << this->SAMPLE_DSL << endl;
 }

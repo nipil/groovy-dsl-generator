@@ -30,6 +30,7 @@ private:
     void generateDefinition(ostream* out, MyParser::DslDef* def) const;
     void generateMasterSpec();
     void generateDelegate() const;
+    void generateCommandHint() const;
 
     void generateExample() const;
     void generateExampleDefinition(ostream* out, const MyParser::DslDef* const def, int level) const;
