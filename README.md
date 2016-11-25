@@ -6,6 +6,10 @@ a bison/flex tool to generate classes from a sample dsl
 
     sudo apt-get install autoconf make g++ flex bison groovy
 
+*WARNING*: groovy version 2.3.0+ is required for the generated code.
+
+If your distribution does not carry a proper version, have a look at [SDKMAN](http://sdkman.io) to get any version easily and securely.
+
 # build & install
 
 To install `gdg` in `/usr/local/bin`
