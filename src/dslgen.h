@@ -11,6 +11,7 @@ class DslGen {
 
 public:
     static const string BASE_OUTPUT;
+    static const string CLASS_PATH;
     static const string DELEGATE_CLASS_NAME;
     static const string MASTER_SCRIPT_TYPE;
 

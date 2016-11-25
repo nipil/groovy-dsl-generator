@@ -9,6 +9,7 @@
 #include "dslgen.h"
 
 const string DslGen::BASE_OUTPUT = "output";
+const string DslGen::CLASS_PATH = "src/main/groovy";
 const string DslGen::DELEGATE_CLASS_NAME = "DelegateTrait";
 const string DslGen::MASTER_SCRIPT_TYPE = "masterScript";
 
@@ -17,7 +18,7 @@ DslGen::DslGen(const MyParser& myparser)
 }
 
 void DslGen::generate() {
-	this->packagePath = this->BASE_OUTPUT + "/src/main/groovy/" + parser.getPackage();
+	this->packagePath = parser.getPackage();
 	replace(this->packagePath.begin(), this->packagePath.end(), '.', '/');
 	this->createOutputDirectory();
 	this->generateSpecifications();
@@ -55,8 +56,9 @@ void DslGen::generateDelegate() const {
 }
 
 void DslGen::createOutputDirectory() const {
-	cout << "Creating folder " << this->packagePath << endl;
-	int result = system(string("mkdir -p " + this->packagePath).c_str());
+	string rp = this->BASE_OUTPUT + "/" + this->CLASS_PATH + "/" + this->packagePath;
+	cout << "Creating folder " << rp << endl;
+	int result = system(string("mkdir -p " + rp).c_str());
 	if (result != 0) {
 		cout << "error while creating directory" << endl;
 		exit(1);
@@ -72,14 +74,15 @@ void DslGen::generateSpecifications() {
 }
 
 ofstream* DslGen::createClassFile(const string& classname) const {
-	string filepath = this->packagePath + "/" + classname + ".groovy";
+	string filepath = this->CLASS_PATH + "/" + this->packagePath + "/" + classname + ".groovy";
 	return this->createOutFile(filepath);
 }
 
 ofstream* DslGen::createOutFile(const string& filepath) const {
-	ofstream* f = new ofstream(filepath.c_str(), ofstream::trunc);
+	string rp = this->BASE_OUTPUT + "/" + filepath;
+	ofstream* f = new ofstream(rp.c_str(), ofstream::trunc);
 	if (!f->is_open()) {
-		cerr << "cannot open output file " << filepath << endl;
+		cerr << "cannot open output file " << rp << endl;
 		exit(1);
 	}
 	return f;
