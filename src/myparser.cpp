@@ -65,20 +65,15 @@ MyParser::TypeList* MyParser::typeDeclarations_add_typeDeclaration(MyParser::Typ
     for (MyParser::TypeList::const_iterator it = lst->begin(); it != lst->end(); it++) {
         // analyse current type
         bool currentIsCustom = this->hasCustomType(**it);
-        // update overall customType flag
-        hasCustomType = hasCustomType || currentIsCustom;
 
         // we cannot have multiple closure without explicitely adding ( and ) to dsl calls ... at lease i have not figured how i could do it without
         if (hasCustomType && currentIsCustom) {
-            cerr << "cannot have multiple custom types on same definition without re-introducing parenthesis in target dsl text" << endl;
+            cerr << "ERROR on line " << yylineno << ": cannot have multiple custom types on same definition without re-introducing parenthesis in target dsl text" << endl;
             exit(1);
         }
 
-        // verify that we do not have the same custom type multiple times
-        if (*type == **it) {
-            cerr << "duplicate type " << *type << " in same definition" << endl;
-            exit(1);
-        }
+        // update overall customType flag
+        hasCustomType = hasCustomType || currentIsCustom;
     }
     // add latest provided type to list
     lst->push_back(type);
