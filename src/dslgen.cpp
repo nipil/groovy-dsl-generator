@@ -50,7 +50,12 @@ void DslGen::generateDelegate() const {
 
 	this->generatePackage(out);
 
-	*out << "trait DelegateTrait {" << endl << endl
+	*out
+		<< "import groovy.transform.TypeChecked" << endl
+		<< endl
+		<< "@TypeChecked" << endl
+		<<"trait DelegateTrait {" << endl
+		<< endl
 		<< "\tdef delegate(Closure cl, Object to) {" << endl
 		<< "\t\tdef code = cl.rehydrate(to, this, this)" << endl
 		<< "\t\tcode.resolveStrategy = Closure.DELEGATE_ONLY" << endl
@@ -173,6 +178,8 @@ void DslGen::generateSpecification(const MyParser::SpecDef* const spec, bool mas
 	ofstream* out = this->createClassFile(classname);
 
 	this->generatePackage(out);
+
+	*out << "import groovy.transform.TypeChecked" << endl << endl << "@TypeChecked" << endl;
 
 	// generate class declaration
 	if (master) {
