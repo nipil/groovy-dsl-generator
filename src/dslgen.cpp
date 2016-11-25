@@ -129,7 +129,7 @@ void DslGen::generateDefinition(ostream* out, MyParser::DslDef* def) const {
 		string& type = **it;
 		*out << "\t\t";
 		if (parser.hasCustomType(type)) {
-	        *out << "this.delegate(cl" << n << ", " << type << ")" << endl;
+			*out << "this.delegate(cl" << n << ", " << type << ")" << endl;
 		} else {
 			*out << "println \"" << type << n << "={" << type << n << "}\"" << endl;
 		}
