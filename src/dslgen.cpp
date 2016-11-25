@@ -140,7 +140,7 @@ void DslGen::generateDefinition(ostream* out, MyParser::DslDef* def) const {
 		if (parser.hasCustomType(type)) {
 			*out << "this.delegate(cl" << n << ", " << type << ")" << endl;
 		} else {
-			*out << "println \"" << type << n << "={" << type << n << "}\"" << endl;
+			*out << "println \"" << *def->keyword << ": " << type << n << "=${" << type << n << "}\"" << endl;
 		}
 	}
 
@@ -224,7 +224,7 @@ void DslGen::generateExampleDefinition(ostream* out, const MyParser::DslDef* con
 		if (parser.hasCustomType(type)) {
 			this->generateExampleDefinition(out, type, level+1);
 		} else if (type == "num") {
-			*out << random();
+			*out << random() % 1000;
 		} else if (type == "txt") {
 			int n = random() % 15 + 5;
 			*out << "\"";
