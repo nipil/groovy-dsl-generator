@@ -188,7 +188,7 @@ void DslGen::generateSpecification(const MyParser::SpecDef* const spec, bool mas
 
 	// list used types as members
 	for (set<string>::const_iterator it = usedCustomTypes.begin(); it != usedCustomTypes.end(); it++) {
-		*out << "\t" << this->getClassName(*it) << " " << *it << endl;
+		*out << "\t" << this->getClassName(*it) << " " << *it << " = new " << this->getClassName(*it) << "()" << endl;
 	}
 
 	*out << "}" << endl;
