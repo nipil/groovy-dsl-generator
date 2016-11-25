@@ -50,8 +50,9 @@ One of the provided definition file :
 
 Generate groovy DSL code, and sample test file :
 
-    $ src/gdg samples-working/0003.def Target package : org.example.dsl.bank
+    $ src/gdg samples-working/0003.def
 
+    Target package : org.example.dsl.bank
     Parsed 3 closure declaration: person statistics transaction
     Parsed 2 top-level DSL keywords: account(txt,statistics) manager(person)
     Creating folder output/src/main/groovy/org/example/dsl/bank
