@@ -233,7 +233,7 @@ void DslGen::generateExampleDefinition(ostream* out, const MyParser::DslDef* con
 		}
 		string& type = **it;
 		if (parser.hasCustomType(type)) {
-			this->generateExampleDefinition(out, type, level+1);
+			this->generateExampleDefinitionFromSpec(out, type, level+1);
 		} else if (type == "num") {
 			*out << random() % 1000;
 		} else if (type == "txt") {
@@ -251,7 +251,7 @@ void DslGen::generateExampleDefinition(ostream* out, const MyParser::DslDef* con
 	*out << endl;
 }
 
-void DslGen::generateExampleDefinition(ostream* out, const string& customType, int level) const {
+void DslGen::generateExampleDefinitionFromSpec(ostream* out, const string& customType, int level) const {
 
 	const MyParser::Specifications& specs = parser.getSpecifications();
 
