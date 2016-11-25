@@ -5,18 +5,5 @@
     b txt
 }
 
-%tutu {
-    aze %titi
-    qsd %titi
-}
+tata %titi
 
-%tete {
-    aze num, %tutu
-    qsd %titi, txt
-}
-
-titi txt
-
-titi %tutu
-
-tata num,txt, %tutu
