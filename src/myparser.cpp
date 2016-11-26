@@ -62,7 +62,7 @@ MyParser::TypeList* MyParser::typeDeclarations_createfor_typeDeclaration(MyParse
 MyParser::TypeList* MyParser::typeDeclarations_add_typeDeclaration(MyParser::TypeList* lst, MyParser::Type* type) const {
     // check start closure with something behind
     if (this->hasCustomType(**lst->begin())) {
-        cerr << "ERROR on line " << yylineno << ": cannot have multiple custom types on same definition without re-introducing parenthesis in target dsl text" << endl;
+        cerr << "ERROR on line " << yylineno << ": cannot start with closure and something behind without re-introducing parenthesis in target dsl text, please move closure away from start" << endl;
         exit(1);
     }
     // add latest provided type to list
